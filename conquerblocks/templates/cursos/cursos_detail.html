@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block head_title %}Cursos{% endblock %}
+
+{% block page_content %}
+    <article id="{{ curso.pk }}">
+        <h2>{{ curso.title }}</h2>
+        <p>{{ curso.content }}</p>
+        <a href="{{ curso.link }}">Agenda una llamada</a>
+    </article>
+
+{% endblock %}

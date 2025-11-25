@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block head_title %}Cursos{% endblock %}
+
+{% block page_content %}
+    {% for curso in cursos %}
+        <article id="{{ curso.pk }}">
+            <h2>{{ curso.title }}</h2>
+            <p>{{ curso.content|truncatewords:100 }}...</p>
+            <a href="{% url 'cursos:cursos_detail' curso.pk %}">Ver más</a>
+        </article>
+    {% endfor %}
+
+{% endblock %}
