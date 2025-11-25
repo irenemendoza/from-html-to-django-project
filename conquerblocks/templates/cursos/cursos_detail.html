@@ -6,7 +6,10 @@
     <article id="{{ curso.pk }}">
         <h2>{{ curso.title }}</h2>
         <p>{{ curso.content }}</p>
-        <a href="{{ curso.link }}">Agenda una llamada</a>
+        {% if curso.toc %}
+            <a href="{{ curso.toc.url }}" download>Descarga el temario</a>
+        {% endif %}
+        <p><a href="{{ curso.link }}">Agenda una llamada</a></p>
     </article>
 
 {% endblock %}

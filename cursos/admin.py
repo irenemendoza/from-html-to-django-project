@@ -6,6 +6,6 @@ from .models import Curso
 @admin.register(Curso)
 class CursoResource(admin.ModelAdmin):
     model = Curso
-    list_display = ("title", "created_at")
+    list_display = ("title", "show_home", "created_at")
     
  

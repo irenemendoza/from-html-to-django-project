@@ -1,8 +1,15 @@
 from django.shortcuts import render
 
+from cursos.models import Curso
+from blog.models import Post
+
 
 def home_views(request):
-    return render(request, 'main/home.html')
+    context = {
+        'posts': Post.objects.filter(show_home=True),
+        'cursos': Curso.objects.filter(show_home=True),
+    }
+    return render(request, 'main/home.html', context)
 
 
 def about_us_views(request):

@@ -4,112 +4,27 @@
 {% block head_title %}Home{% endblock %}
 {% block page_content %}   
     <h1>CONQUER BLOCKS - HOME</h1>
-    {% comment %}
-    <p>Transforma tu <strong>futuro profesional</strong> con la escuela líder en la enseñanza de nuevas profesiones tecnológicas</p>
-    <section>
-      <h2>Nuestro equipo</h2>
-      <p>
-        Fórmate con profesionales de la élite del desarrollo con amplia experiencia en el mercado laboral
-      </p>
-      <article>
-        <figure>
-          <img src="{% static 'img/quienes_somos/chemaAlonso.webp' %}" alt="Chema Alonso">
-        </figure>
-        <h3>Chema Alonso</h3>
-        <h4>Experto en Ciberseguridad</h4>
-        <p>
-          Es actualmente CDO (Chief Digital Officer) de Telefónica, y es responsable de Innovación, Datos, Plataformas,
-          Productos y Servicios Digitales.
-        </p>
-      </article>
+    {% if cursos %}
+      <section>
+        <h2>Nuestros cursos más aclamados</h2>
+        {% for curso in cursos %}
+          <h3>{{ curso.title }}</h3>
+          <p>{{ curso.content|truncatewords:40 }}...</p>
+          <a href="{% url 'cursos:cursos_detail' curso.pk %}">Ver más</a>
+        {% endfor %}
+      </section>
+    {% endif %}
+    {% if posts %}
+      <section>
+        <h2>Últimas noticias</h2>
+        {% for post in posts %}
+          <h3>{{ post.title }}</h3>
+          <p>{{ post.content|truncatewords:40 }}...</p>
+          <a href="{% url 'blog:blog_detail' post.pk %}">Ver más</a>
+        {% endfor %}
+      </section>
+    {% endif %}
 
-      <article>
-        <figure>
-          <img src="{% static 'img/quienes_somos/bienvenidoSaez.jpg' %}" alt="Bienvenido Saez">
-        </figure>
-        <h3>Bienvenido Sáez</h3>
-        <h4>Programador especializado</h4>
-        <p>
-          Bienvenido cuenta con más de 15 años de experiencia en el mundo de la educación, especialmente enseñando
-          HTML, CSS, Javascript y Django, tecnologías en la que es mentor en nuestro Máster.
-        </p>
-      </article>
-
-      <article>
-        <figure>
-          <img src="{% static 'img/quienes_somos/carlosAzaustre.jpg' %}" alt="Carlos Azaustre">
-        </figure>
-        <h3>Carlos Azaustre</h3>
-        <h4>Ingeniero telemático</h4>
-        <p>
-          Está reconocido por Google desde 2019 como Developer Expert GDE en Tecnologías web y premiado en 2022 y 2023
-          como Microsoft MVP (Most Valuable Professional).
-        </p>
-      </article>
-
-      <nav>
-        <a href="{% url 'main:about_us' %}">Ver más</a>
-      </nav>
-    </section>
-{% endcomment %}
-    <section>
-      <h2>Nuestros cursos</h2>
-
-      {% for curso in cursos %}
-        <article id={{ curso.id }} >
-          <a href="{% url 'cursos:cursos_detail' curso.id %}">
-            <h3>{{ curso.title }}</h3>
-            <figure>
-              <img src="{% static 'img/cursos/blockchain.jpg' %}" alt="Imagen Blockchain">
-            </figure>
-          </a>
-          <p>
-           {{ curso.content }}
-          </p>
-          <a href="{{ curso.link }}">Agenda tu llamada</a>
-        </article>
-
-      {% endfor %}
-
-      <nav>
-        <a href="{% url 'cursos:cursos_list' %}">Otros cursos</a>
-      </nav>
-    </section>
-
-    <section>
-      <h2>Nuestro blog</h2>
-{% comment %} 
-      <article>
-        <a href="{% url 'blog:blog_detail' %}">
-          <figure>
-            <img src={%  static "img/blog/blog1.jpg" %} alt="Imagen">
-          </figure>
-          <h3>Desarrollo Full-Stack para perfiles Junior</h3>
-        </a>
-        <p>En el dinámico mundo del desarrollo web, el rol de desarrollador Full Stack ha emergido como una carrera
-          codiciada, ofreciendo la promesa de dominar tanto el frontend</p>
-
-      </article>
-
-      <article>
-        <a href="{% url 'blog:blog_detail' %}">
-          <figure>
-            <img src="{% static 'img/blog/blog2.jpg' %}" alt="Imagen">
-          </figure>
-          <h3>El Desarrollador Full Stack Marketer: Un Híbrido Innovador en la Era Digital</h3>
-        </a>
-        <p>En el vertiginoso mundo del desarrollo web y el marketing digital, emerge una figura revolucionario: el
-          desarrolador Full Stack Marketer. Este híbrido entre desarrolador y</p>
-
-      </article>
-
-
-      <nav>
-        <a href="{% url 'blog:blog_list' %}">Ver más</a>
-      </nav>
-    </section>
-
-{% endcomment %}
-        {% endblock %}
+{% endblock %}
 
 

@@ -10,14 +10,10 @@ def cursos_views(request):
     return render(request, 'cursos/cursos.html', context)
 
 def cursos_detail_views(request, id):
-    all_cursos = Curso.objects.all()
+    curso = Curso.objects.get(pk=id)
 
     context = {
-        "curso": None
+        "curso": curso
     }
 
-    for curso in all_cursos:
-        if curso.id == id:
-            context["curso"] = curso
-    
     return render(request, 'cursos/cursos_detail.html', context)
