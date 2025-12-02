@@ -20,4 +20,12 @@ class ContactForm(forms.Form):
             raise forms.ValidationError("El nombre debe tener al menos 5 caracteres")
         return nombre
     
-    
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        label="Usuario", 
+        max_length=20
+        )
+    password = forms.CharField(
+        widget=forms.PasswordInput(),
+        label="Contraseña",
+        )

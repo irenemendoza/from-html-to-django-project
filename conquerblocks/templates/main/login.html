@@ -1,6 +1,14 @@
 {% extends 'layout.html' %}
 
 {% block head_title %}Login{% endblock %}
-{% block page_title %}Inicia tu sesión{% endblock %}
 
 
+{% block page_content %}
+
+<h1>Login</h1>
+<form action="" method="POST">
+    {{ form.as_p }}
+    <button>Enviar</button>
+</form>
+
+{% endblock %}

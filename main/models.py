@@ -18,5 +18,10 @@ class Contact(models.Model):
         default=timezone.now
     )
 
+    contacted = models.BooleanField(
+        "¿Se ha contactado con esta persona?",
+        default=False
+    )
+
     def __str__(self):
         return self.nombre

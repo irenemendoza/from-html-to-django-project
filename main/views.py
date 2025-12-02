@@ -3,8 +3,10 @@ from django.shortcuts import render
 from cursos.models import Curso
 from blog.models import Post
 
-from .form import ContactForm
+from .form import ContactForm, LoginForm
 from django.core.mail import send_mail
+from .models import Contact
+
 
 
 def home_views(request):
@@ -20,7 +22,14 @@ def about_us_views(request):
 
 
 def login_views(request):
-    return render(request, 'main/login.html')
+    if request.POST:
+        pass
+    else:
+        form = LoginForm()
+        context = {
+            "form": form
+        }
+    return render(request, 'main/login.html', context)
 
 
 def register_views(request):
@@ -41,11 +50,16 @@ def contact_views(request):
             
             message_content = f'{nombre} con email {email} ha escrito lo siguiente: {comentario}'
 
+            Contact.objects.create(
+                nombre=nombre,
+                email=email,
+                comentario=comentario
+            )
             success = send_mail(
                 "Formulario de contacto de mi web",
                 message_content,
-                "info@laveladaconquer.com",
-                ["iremen19@gmail.com"],
+                "mendozagonzalez.irene@gmail.com",
+                ["iremen19@gmail.com", "mendozagonzalez.irene@gmail.com"],
                 fail_silently=False,
             )
 
