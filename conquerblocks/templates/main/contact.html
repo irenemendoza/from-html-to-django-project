@@ -4,6 +4,9 @@
 {% block page_title %}Contactanos{% endblock %}
 
 {% block page_content %}
+{% if success %}
+    <p>Se ha enviado el formulario correctamente</p>
+{% else %}
     <form action="" method="POST">
         {% csrf_token %}
         <div>
@@ -11,4 +14,5 @@
         </div>
         <button>Enviar</button> 
     </form>
+{% endif %}
 {% endblock %}

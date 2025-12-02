@@ -4,6 +4,7 @@ from cursos.models import Curso
 from blog.models import Post
 
 from .form import ContactForm
+from django.core.mail import send_mail
 
 
 def home_views(request):
@@ -27,27 +28,35 @@ def register_views(request):
 
 
 def contact_views(request):
-    if request.POST:
+    if request.method == 'POST':
         formulario = ContactForm(request.POST)
-
+        
         if formulario.is_valid():
             nombre = formulario.cleaned_data['nombre']
             email = formulario.cleaned_data['email']
             comentario = formulario.cleaned_data['comentario']
+            
+            # Aquí deberías enviar el correo real
             print(f'Se ha enviado un correo a {nombre} al correo {email} con el texto {comentario}')
+            
+            message_content = f'{nombre} con email {email} ha escrito lo siguiente: {comentario}'
+
+            success = send_mail(
+                "Formulario de contacto de mi web",
+                message_content,
+                "info@laveladaconquer.com",
+                ["iremen19@gmail.com"],
+                fail_silently=False,
+            )
 
             context = {
-                "formulario": formulario,
-                "success": True,
-            }
-
-            return render(request, 'main/contact.html', context)
-        else:
-            context = {
-                "formulario": formulario
+                "formulario": ContactForm(),  # Resetear el formulario después del éxito
+                "success": success,
             }
             return render(request, 'main/contact.html', context)
-    formulario = ContactForm()
+    else:
+        formulario = ContactForm()
+    
     context = {
         "formulario": formulario
     }
