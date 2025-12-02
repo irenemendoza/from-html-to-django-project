@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /home/irene/Documentos/ejercicios-clases/django/conquerblocks-project/env
+set -gx VIRTUAL_ENV /home/irene/conquer/proyectos/django/from-html-to-django-project/env
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH

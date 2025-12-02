@@ -3,4 +3,12 @@
 {% block head_title %}Contact{% endblock %}
 {% block page_title %}Contactanos{% endblock %}
 
-
+{% block page_content %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div>
+            {{ formulario.as_p }}
+        </div>
+        <button>Enviar</button> 
+    </form>
+{% endblock %}

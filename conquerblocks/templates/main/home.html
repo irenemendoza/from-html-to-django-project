@@ -8,9 +8,14 @@
       <section>
         <h2>Nuestros cursos más aclamados</h2>
         {% for curso in cursos %}
-          <h3>{{ curso.title }}</h3>
-          <p>{{ curso.content|truncatewords:40 }}...</p>
-          <a href="{% url 'cursos:cursos_detail' curso.pk %}">Ver más</a>
+          <div>
+            {% if curso.curso_image %}
+              <img src="{{ curso.curso_image.thumbnails.small.url }}" alt="Imagen del curso {{ curso.title }}">
+            {% endif %}
+            <h3>{{ curso.title }}</h3>
+            <p>{{ curso.content|truncatewords:100 }}...</p>
+            <a href="{% url 'cursos:cursos_detail' curso.pk %}">Ver más</a>
+          </div>
         {% endfor %}
       </section>
     {% endif %}

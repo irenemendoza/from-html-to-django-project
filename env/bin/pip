@@ -1,4 +1,4 @@
-#!/home/irene/Documentos/ejercicios-clases/django/conquerblocks-project/env/bin/python3
+#!/home/irene/conquer/proyectos/django/from-html-to-django-project/env/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

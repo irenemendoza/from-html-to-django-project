@@ -4,8 +4,11 @@
 
 {% block page_content %}
     <article id="{{ curso.pk }}">
+        {% if curso.curso_image %}
+            <img src="{{ curso.curso_image.thumbnails.large.url }}" alt="Imagen del curso {{ curso.title }}">
+        {% endif %}
         <h2>{{ curso.title }}</h2>
-        <p>{{ curso.content }}</p>
+        <p>{{ curso.content|safe }}</p>
         {% if curso.toc %}
             <a href="{{ curso.toc.url }}" download>Descarga el temario</a>
         {% endif %}

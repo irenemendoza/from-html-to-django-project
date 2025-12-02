@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from thumbnails.fields import ImageField
+from ckeditor.fields import RichTextField
 
 
 class Curso(models.Model):
@@ -7,7 +9,7 @@ class Curso(models.Model):
         verbose_name = "Título",
         max_length = 200)
     
-    content = models.TextField(
+    content = RichTextField(
         verbose_name = "Contenido"
     )
     
@@ -27,6 +29,13 @@ class Curso(models.Model):
     toc = models.FileField(
         "Temario",
         upload_to="cursos/toc/",
+        null=True,
+        blank=True,
+    )
+
+    curso_image = ImageField(
+        "Imagen del curso",
+        upload_to="cursos/images/",
         null=True,
         blank=True,
     )
