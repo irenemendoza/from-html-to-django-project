@@ -7,6 +7,11 @@ from .form import ContactForm, LoginForm
 from django.core.mail import send_mail
 from .models import Contact
 
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect
+
+from django.urls import reverse
+
 
 
 def home_views(request):
@@ -23,14 +28,37 @@ def about_us_views(request):
 
 def login_views(request):
     if request.POST:
-        pass
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect(reverse('main:home'))
+            else:
+                context = {
+                    'form': form,
+                    'error': True,
+                    'error_message': 'Usuario no válido'
+                }
+            return render(request, 'main/login.html', context)  
+        else: 
+            context = {
+                'form': form,
+                'error': True
+            }     
+            return render(request, 'main/login.html', context)  
     else:
         form = LoginForm()
         context = {
             "form": form
         }
-    return render(request, 'main/login.html', context)
+        return render(request, 'main/login.html', context)
 
+def logout_views(request):
+    logout(request)
+    return redirect(reverse('main:home'))
 
 def register_views(request):
     return render(request, 'main/register.html')

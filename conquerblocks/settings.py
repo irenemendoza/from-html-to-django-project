@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
 
 ROOT_URLCONF = 'conquerblocks.urls'
@@ -187,3 +188,7 @@ EMAIL_HOST_PASSWORD= config('EMAIL_HOST_PASSWORD')
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/' # La vista a la que se dirige después de un login exitoso
+LOGOUT_REDIRECT_URL = '/' # La vista a la que se dirige después de un logout
