@@ -3,7 +3,7 @@ from django.shortcuts import render
 from cursos.models import Curso
 from blog.models import Post
 
-from .form import ContactForm, LoginForm
+from .form import ContactForm, LoginForm, UserRegisterForm
 from django.core.mail import send_mail
 from .models import Contact
 
@@ -11,6 +11,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 
 from django.urls import reverse
+
+from django.contrib.auth.models import User
 
 
 
@@ -61,7 +63,39 @@ def logout_views(request):
     return redirect(reverse('main:home'))
 
 def register_views(request):
-    return render(request, 'main/register.html')
+    if request.POST:
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            password1 = form.cleaned_data['password1']
+            password2 = form.cleaned_data['password2']  
+
+            user = User.objects.create_user(username, email, password1)  
+            if user:
+                user.first_name = first_name
+                user.last_name = last_name
+                user.save()
+
+            context = {
+                "msj": 'Usuario creado correctamente'
+            }
+
+            return render(request, 'main/register.html', context)
+        else:
+            context = {
+                'form': form,
+                'error': True
+            }  
+            return render(request, 'main/register.html', context)
+    else:
+        form = UserRegisterForm()
+        context = {
+            "form": form
+        }
+    return render(request, 'main/register.html', context)
 
 
 def contact_views(request):
