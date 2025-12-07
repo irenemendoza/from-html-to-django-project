@@ -14,6 +14,11 @@ from django.urls import reverse
 
 from django.contrib.auth.models import User
 
+from django.http import HttpResponse
+from django.views import View
+
+from django.views.generic.base import TemplateView
+from django.views.generic.edit import FormView
 
 
 def home_views(request):
@@ -73,6 +78,30 @@ def register_views(request):
             password1 = form.cleaned_data['password1']
             password2 = form.cleaned_data['password2']  
 
+            """Modificado para que se envíe un correo automáticamente:
+
+            message_content = f'{nombre} con email {email} ha escrito lo siguiente: {comentario}'
+
+            Contact.objects.create(
+                nombre=nombre,
+                email=email,
+                comentario=comentario
+            )
+            success = send_mail(
+                "Formulario de contacto de mi web",
+                message_content,
+                "mendozagonzalez.irene@gmail.com",
+                ["iremen19@gmail.com", "mendozagonzalez.irene@gmail.com"],
+                fail_silently=False,
+            )
+
+            context = {
+                "formulario": ContactForm(),  # Resetear el formulario después del éxito
+                "success": success,
+            }
+
+        """
+        
             user = User.objects.create_user(username, email, password1)  
             if user:
                 user.first_name = first_name
@@ -137,3 +166,45 @@ def contact_views(request):
         "formulario": formulario
     }
     return render(request, 'main/contact.html', context)
+
+class ContactFormView(FormView):
+    template_name = "main/contact.html"
+    form_class = ContactForm
+    success_url = "/"
+
+    def form_valid(self, form):
+        nombre = form.cleaned_data['nombre']
+        email = form.cleaned_data['email']
+        comentario = form.cleaned_data['comentario']
+            
+        message_content = f'{nombre} con email {email} ha escrito lo siguiente: {comentario}'
+
+        Contact.objects.create(
+            nombre=nombre,
+            email=email,
+            comentario=comentario
+        )
+        success = send_mail(
+            "Formulario de contacto de mi web",
+            message_content,
+            "mendozagonzalez.irene@gmail.com",
+            ["iremen19@gmail.com", "mendozagonzalez.irene@gmail.com"],
+            fail_silently=False,
+        )
+
+        return super().form_valid(form)
+            
+class Prueba(View):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse("Hello, World!") 
+
+class PruebaTemplateView(TemplateView):
+    template_name = "PruebaTemplateView.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["titulo"] = 'Este es mi título'
+        return context
+
+class PruebaTemplateView2(PruebaTemplateView):
+    template_name = "PruebaTemplateView.html"
